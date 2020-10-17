@@ -18,9 +18,8 @@ function printCards(questions) {
 }
 function getCategoires() {
     fetch(`https://opentdb.com/api_category.php`)
-    //.then(response => {console.log(response)}) // --> ver el arreglo
     .then(response => response.json())
-    .then(data => returnCategoriesHTML(data.trivia_categories)) //console.log(data.trivia_categories)) //printCategories(data.trivia_categories))
+    .then(data => returnCategoriesHTML(data.trivia_categories))
 }
 //Categorias
 function returnCategoriesHTML(c) {
@@ -55,19 +54,11 @@ function returnCardHTML(q,indexCard) {
 
 
 function returnAnswersHTML(correct, incorrects,questionId) {
-    // const correctHTML = `<div class="form-check">
-    //                         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-    //                         <label class="form-check-label" for="exampleRadios1">
-    //                         ${correct}
-    //                         </label>
-    //                     </div>`;
-
-    incorrects.push(correct)
-    incorrects.sort(() => Math.random() - 0.5)
+    incorrects.splice(getRandomInt(0,4),0,correct)
     let incorrectHTML = '';
     incorrects.forEach((incorrect,index) => {
         incorrectHTML += `<div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="answer-${questionId}-${index}" value="option1" checked>
+                            <input class="form-check-input" type="radio" name="question-${questionId}" id="answer-${questionId}-${index}" value="option1" checked>
                             <label class="form-check-label" for="answer-${questionId}-${index}">
                             ${incorrect}
                             </label>
@@ -78,5 +69,8 @@ function returnAnswersHTML(correct, incorrects,questionId) {
     return incorrectHTML + `<label>
     Correct Answer: ${correct}
     </label>`
+}
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
 }
 getCategoires();
