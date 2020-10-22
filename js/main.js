@@ -77,11 +77,8 @@ function returnAnswersHTML(correct, incorrects,questionId) {
                             </label>
                         </div>`;
     })
-
-
-    return incorrectHTML + `<label>
-    Correct Answer: ${correct}
-    </label>`
+    
+    return incorrectHTML
 }
 function retunrURL(questionsQuantity,difficult, type, category){
     let url = `https://opentdb.com/api.php?amount=${questionsQuantity}&type=${type}`;
